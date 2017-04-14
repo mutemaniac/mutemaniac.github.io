@@ -95,15 +95,15 @@
 import &quot;fmt&quot;
 
 func main() {
-	func() {
-		defer func() {
-			fmt.Println(&quot;1&quot;)
-			fmt.Println(&quot;2&quot;)
-			panic(&quot;after 2&quot;)
-			fmt.Println(&quot;3&quot;)
-		}()
-	}()
-	fmt.Println(&quot;Hello, 世界&quot;)
+    func() {
+        defer func() {
+            fmt.Println(&quot;1&quot;)
+            fmt.Println(&quot;2&quot;)
+            panic(&quot;after 2&quot;)
+            fmt.Println(&quot;3&quot;)
+        }()
+    }()
+    fmt.Println(&quot;Hello, 世界&quot;)
 }
 </code></pre>
 
@@ -115,11 +115,11 @@ panic: after 2
 
 goroutine 1 [running]:
 main.main.func1.1()
-	/tmp/sandbox790552561/main.go:10 +0x180
+    /tmp/sandbox790552561/main.go:10 +0x180
 main.main.func1()
-	/tmp/sandbox790552561/main.go:13 +0x7b
+    /tmp/sandbox790552561/main.go:13 +0x7b
 main.main()
-	/tmp/sandbox790552561/main.go:13 +0x20
+    /tmp/sandbox790552561/main.go:13 +0x20
 </code></pre>
 
 <p>以上程序的假设打印2后程序错误，会导致3没有打印出来，如果把每件事分开：</p>
@@ -154,11 +154,11 @@ panic: after 2
 
 goroutine 1 [running]:
 main.main.func1.2()
-	/tmp/sandbox153708588/main.go:14 +0x100
+    /tmp/sandbox153708588/main.go:14 +0x100
 main.main.func1()
-	/tmp/sandbox153708588/main.go:20 +0xbb
+    /tmp/sandbox153708588/main.go:20 +0xbb
 main.main()
-	/tmp/sandbox153708588/main.go:20 +0x20
+    /tmp/sandbox153708588/main.go:20 +0x20
 </code></pre>
 
 <p>这样的话123就会全部执行了。</p>
@@ -172,15 +172,15 @@ main.main()
 import &quot;fmt&quot;
 
 func main() {
-	func() {
-		i:=0
-		defer func(j int) {
-			fmt.Println(&quot;i = &quot;,i)
-			fmt.Println(&quot;j = &quot;,j)
-		}(i+1)
-		i = 3
-	}()
-	fmt.Println(&quot;Hello, 世界&quot;)
+    func() {
+        i := 0
+        defer func(j int) {
+            fmt.Println(&quot;i = &quot;, i)
+            fmt.Println(&quot;j = &quot;, j)
+        }(i + 1)
+        i = 3
+    }()
+    fmt.Println(&quot;Hello, 世界&quot;)
 }
 </code></pre>
 
